@@ -12,6 +12,10 @@ else
   sudo yum -y update
   sudo yum -y install java-1.7.0-openjdk
   cd /tmp
+  . /etc/environment
+  export http_proxy
+  export https_proxy
+  export no_proxy
   wget https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.57/bin/apache-tomcat-7.0.57.tar.gz
   tar xzf apache-tomcat-7.0.57.tar.gz
   sudo mv apache-tomcat-7.0.57 /usr/share/tomcat
