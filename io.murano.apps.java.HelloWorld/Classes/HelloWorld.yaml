@@ -49,7 +49,9 @@ Workflow:
           - $.tomcat.instance.agent.call($template, $resources)
           # Configure access to PostgreSql
           - $this.find(std:Environment).reporter.report($this, 'Ensuring Database is deployed.')
-          - $.database.createDatabase($.dbName, $.dbUser, $.dbPassword)
+          - $.database.createDatabase($.dbName)
+          - $.database.createUser($.dbUser, $.dbPassword)
+          - $.database.assignUser($.dbUser, $.dbName)
           - $this.find(std:Environment).reporter.report($this, 'Configure access to PostgreSql.')
           - $template: $resources.yaml('ConfigureAccessToPostgreSql.template').bind(dict(
                 database => $.dbName,
