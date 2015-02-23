@@ -10,10 +10,11 @@ Application:
   instance:
     ?:
       type: io.murano.resources.LinuxMuranoInstance
-    name: generateHostname($.appConfiguration.unitNamingPattern, 1)
+    name: generateHostname($.instanceConfiguration.unitNamingPattern, 1)
     flavor: $.instanceConfiguration.flavor
     image: $.instanceConfiguration.osImage
     keyname: $.instanceConfiguration.keyPair
+    availabilityZone: $.instanceConfiguration.availabilityZone
     assignFloatingIp: $.appConfiguration.assignFloatingIP
 
 Forms:
@@ -33,37 +34,30 @@ Forms:
              Select to true to assign floating IP automatically
           initial: false
           required: false
-        - name: unitNamingPattern
-          type: string
-          required: false
-          hidden: true
-          widgetMedia:
-            js: ['muranodashboard/js/support_placeholder.js']
-            css: {all: ['muranodashboard/css/support_placeholder.css']}
 
   - initDatabaseConfiguration:
       fields:
         - name: title
           type: string
-          required: false
+          required: true
           hidden: true
           descriptionTitle: Database Configuration
           description: Specify the properties of the database which will be created at MySql Server
         - name: database
           type: string
-          required: false
+          required: true
           label: Database name
           description: >-
             Please, provide database name that is going to be created
         - name: username
           type: string
-          required: false
+          required: true
           label: Username
           description: >-
             Please, provide username that is going to be used to connect to the database
         - name: password
           type: password
-          required: false
+          required: true
           label: Password
           descriptionTitle: Password
           description: >-
@@ -102,4 +96,18 @@ Forms:
           label: Availability zone
           description: Select availability zone where the application would be installed.
           required: false
+        - name: unitNamingPattern
+          type: string
+          label: Instance Naming Pattern
+          required: false
+          maxLength: 200
+          regexpValidator: '^[-_\w]+$'
+          errorMessages:
+            invalid: Just letters, numbers, underscores and hyphens are allowed.
+          helpText: Just letters, numbers, underscores and hyphens are allowed.
+          description: >-
+            Specify a string, that will be used in instance hostname.
+            Just A-Z, a-z, 0-9, dash and underline are allowed.
+
+
 

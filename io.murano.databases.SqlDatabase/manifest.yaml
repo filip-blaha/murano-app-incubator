@@ -5,6 +5,6 @@ Name: SQL Library
 Description: |
  This is the interface defining API for different SQL - RDBMS databases
 Author: 'Mirantis, Inc'
-Tags: [sql, RDSMS]
+Tags: [SQL, RDBMS]
 Classes:
  io.murano.databases.SqlDatabase: SqlDatabase.yaml

@@ -27,5 +27,5 @@ log "DEBUG: git-cloning $1 to $2"
 git clone $1 $2
 cd $2/WEB-INF/classes
 for f in $(find . -name "*.java"); do
-    javac -cp /usr/share/tomcat/lib/tomcat-servlet-3.0-api.jar "$f"
+    javac -cp /usr/share/tomcat/lib/servlet-api.jar "$f"
 done

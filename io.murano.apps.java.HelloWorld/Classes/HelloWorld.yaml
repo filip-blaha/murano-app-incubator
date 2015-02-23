@@ -3,6 +3,7 @@ Namespaces:
   std: io.murano
   sys: io.murano.system
   apps: io.murano.apps
+  db: io.murano.databases
   tc: io.murano.apps.apache
 
 Name: HelloWorld
@@ -19,7 +20,7 @@ Properties:
   dir:
     Contract: $.string().notNull()
   database:
-    Contract: $.class(apps:PostgreSql).notNull()
+    Contract: $.class(db:SqlDatabase).notNull()
   dbName:
     Contract: $.string().notNull()
   dbUser:
