@@ -1,0 +1,25 @@
+FormatVersion: 2.0.0
+Version: 1.0.0
+Name: Configure database access credentails
+
+Parameters:
+  database: $database
+  username: $username
+  password: $password
+  host: $host
+  dir: $dir
+  driverName: $driverName
+
+Body: |
+  return configure('{0} {1} {2} {3} {4} {5}'.format(args.database, args.username, args.password, args.host, args.driverName, args.dir )).stdout
+
+Scripts:
+  configure:
+    Type: Application
+    Version: 1.0.0
+    EntryPoint: configureAccessToSql.sh
+    Files:
+      - <common.sh>
+    Options:
+      captureStdout: true
+      captureStderr: true
