@@ -126,3 +126,15 @@ Methods:
   getJDBCDriverName:
     Body:
       - Return: 'com.mysql.jdbc.Driver'
+
+  getJDBCConnectionString:
+    Arguments:
+      - dbname:
+          Contract: $.string().notNull()
+    Body:
+      - If: $.instance.assignFloatingIp
+        Then:
+          - $host: $.instance.floatingIpAddress
+        Else:
+          - $host: $.instance.ipAddresses[0]
+      - Return: format('jdbc:mysql://{0}/{1}', $host, $dbname)

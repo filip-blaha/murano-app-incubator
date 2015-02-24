@@ -36,3 +36,8 @@ Methods:
           Contract: $.string().notNull()
 
   getJDBCDriverName:
+
+  getJDBCConnectionString:
+    Arguments:
+      - dbname:
+          Contract: $.string().notNull()

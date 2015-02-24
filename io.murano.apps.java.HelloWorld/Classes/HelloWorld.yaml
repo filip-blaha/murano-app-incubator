@@ -47,19 +47,18 @@ Workflow:
               ))
           - $this.find(std:Environment).reporter.report($this, 'Setting up the application on Tomcat.')
           - $.tomcat.instance.agent.call($template, $resources)
-          # Configure access to PostgreSql
+          # Configure access to DB
           - $this.find(std:Environment).reporter.report($this, 'Ensuring Database is deployed.')
           - $.database.createDatabase($.dbName)
           - $.database.createUser($.dbUser, $.dbPassword)
           - $.database.assignUser($.dbUser, $.dbName)
-          - $this.find(std:Environment).reporter.report($this, 'Configure access to PostgreSql.')
+          - $this.find(std:Environment).reporter.report($this, 'Configure access to DB.')
           - $template: $resources.yaml('ConfigureAccessToSql.template').bind(dict(
-                database => $.dbName,
                 username => $.dbUser,
                 password => $.dbPassword,
-                host => $.database.instance.ipAddresses[0],
                 dir => $.dir,
-                driverName => $.database.getJDBCDriverName()
+                driverName => $.database.getJDBCDriverName(),
+                connectionStr => $.database.getJDBCConnectionString( $.dbName )
               ))
           - $.tomcat.instance.agent.call($template, $resources)
           - $this.find(std:Environment).reporter.report($this, 'Application is installed')

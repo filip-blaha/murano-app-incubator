@@ -20,9 +20,10 @@ if [[ "$DistroBasedOn" != "redhat" ]]; then
     exit 1
 fi
 
-sed -e "s/YOURUSERNAMEHERE/$2/" -i /usr/share/tomcat/webapps/$6/META-INF/context.xml
-sed -e "s/YOURPASSWORDHERE/$3/" -i /usr/share/tomcat/webapps/$6/META-INF/context.xml
-sed -e "s/YOURHOSTHERE/$4/" -i /usr/share/tomcat/webapps/$6/META-INF/context.xml
-sed -e "s/YOURDATABASEHERE/$1/" -i /usr/share/tomcat/webapps/$6/META-INF/context.xml
-sed -e "s/org.postgresql.Driver/$5/" -i /usr/share/tomcat/webapps/$6/META-INF/context.xml
-sed -e "s/org.apache.commons.dbcp.BasicDataSourceFactory/org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory/" -i /usr/share/tomcat/webapps/$6/META-INF/context.xml
+sed -e "s/YOURUSERNAMEHERE/$1/" -i /usr/share/tomcat/webapps/$5/META-INF/context.xml
+sed -e "s/YOURPASSWORDHERE/$2/" -i /usr/share/tomcat/webapps/$5/META-INF/context.xml
+#sed -e "s/YOURHOSTHERE/$4/" -i /usr/share/tomcat/webapps/$5/META-INF/context.xml
+#sed -e "s/YOURDATABASEHERE/$1/" -i /usr/share/tomcat/webapps/$5/META-INF/context.xml
+sed -e "s/org.postgresql.Driver/$3/" -i /usr/share/tomcat/webapps/$5/META-INF/context.xml
+sed -e "s|jdbc:postgresql://YOURHOSTHERE/YOURDATABASEHERE|$4|" -i /usr/share/tomcat/webapps/$5/META-INF/context.xml
+sed -e "s/org.apache.commons.dbcp.BasicDataSourceFactory/org.apache.tomcat.dbcp.dbcp.BasicDataSourceFactory/" -i /usr/share/tomcat/webapps/$5/META-INF/context.xml

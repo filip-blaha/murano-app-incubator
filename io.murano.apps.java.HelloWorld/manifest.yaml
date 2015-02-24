@@ -3,7 +3,7 @@ Type: Application
 FullName: io.murano.apps.java.HelloWorld
 Name: Hello, Java
 Description: |
- An example of a Java app running on a Apache Tomcat Servlet container and using the Postgre SQL database
+ An example of a Java app running on a Apache Tomcat Servlet container and using the either Postgre SQL, or MySql database
 Author: 'Mirantis, Inc'
 Tags: [Servlets, Server, Pages, Java]
 Classes:
