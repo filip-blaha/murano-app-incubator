@@ -40,7 +40,7 @@ Forms:
             Select an instance of Java servlet contaniner to run the app
         - name: repository
           type: string
-          initial: https://github.com/ativelkov/hello-world-servlet.git
+          initial: https://github.com/filip-blaha/hello-world-servlet.git
           hidden: true
   - dbConfiguration:
       fields:
