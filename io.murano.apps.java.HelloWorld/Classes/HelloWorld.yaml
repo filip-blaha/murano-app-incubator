@@ -53,12 +53,13 @@ Workflow:
           - $.database.createUser($.dbUser, $.dbPassword)
           - $.database.assignUser($.dbUser, $.dbName)
           - $this.find(std:Environment).reporter.report($this, 'Configure access to PostgreSql.')
-          - $template: $resources.yaml('ConfigureAccessToPostgreSql.template').bind(dict(
+          - $template: $resources.yaml('ConfigureAccessToSql.template').bind(dict(
                 database => $.dbName,
                 username => $.dbUser,
                 password => $.dbPassword,
                 host => $.database.instance.ipAddresses[0],
-                dir => $.dir
+                dir => $.dir,
+                driverName => $.database.getJDBCDriverName()
               ))
           - $.tomcat.instance.agent.call($template, $resources)
           - $this.find(std:Environment).reporter.report($this, 'Application is installed')

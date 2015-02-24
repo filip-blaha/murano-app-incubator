@@ -38,13 +38,13 @@ Forms:
       fields:
         - name: title
           type: string
-          required: true
+          required: false
           hidden: true
           descriptionTitle: Database Configuration
           description: Specify the properties of the database which will be created at Postgress Server
         - name: database
           type: string
-          required: true
+          required: false
           label: Database name
           description: >-
             Please, provide database name that is going to be created
@@ -56,7 +56,7 @@ Forms:
             Please, provide username that is going to be used to connect to the database
         - name: password
           type: password
-          required: true
+          required: false
           label: Password
           descriptionTitle: Password
           description: >-

@@ -34,3 +34,5 @@ Methods:
           Contract: $.string().notNull()
       - password:
           Contract: $.string().notNull()
+
+  getJDBCDriverName:

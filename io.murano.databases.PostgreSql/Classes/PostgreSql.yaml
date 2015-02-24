@@ -123,3 +123,7 @@ Methods:
         Else:
           - $host: $.instance.ipAddresses[0]
       - Return: format('psql://{0}@{1}:{2}', $username, $password, $host)
+
+  getJDBCDriverName:
+    Body:
+      - Return: 'org.postgresql.Driver'
