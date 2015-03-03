@@ -27,6 +27,9 @@ Properties:
     Contract: $.string().notNull()
   dbPassword:
     Contract: $.string().notNull()
+  mistralClient:
+    Contract: $.class(sys:MistralClient)
+    Usage: Runtime
 
 Workflow:
   initialize:
@@ -67,3 +70,6 @@ Workflow:
               - $ep: $.tomcat.instance.floatingIpAddress + ':8080/' + $.dir
               - $this.find(std:Environment).reporter.report($this, 'Running at http://' + $ep)
           - $.setAttr(deployed, True)
+          - $mistral_workflow: $resources.string('TestTomcat.yaml')
+          - $.mistralClient.upload(definition => $mistral_workflow)
+          - $.mistralClient.run(name => 'test_tomcat', inputs => dict(url => 'http://' + $ep))
