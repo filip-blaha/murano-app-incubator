@@ -35,6 +35,7 @@ Workflow:
   initialize:
     Body:
       - $.environment: $.find(std:Environment).require()
+      - $this.mistralClient: new(sys:MistralClient)
 
   deploy:
     Body:
