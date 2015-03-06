@@ -9,7 +9,7 @@ test_tomcat:
     check_tomcat_task:
       action: std.http
       input:
-        url: $.url
+        url: <% $.url %>
         method: GET
       policies:
         retry:
