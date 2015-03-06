@@ -66,11 +66,11 @@ Workflow:
               ))
           - $.tomcat.instance.agent.call($template, $resources)
           - $this.find(std:Environment).reporter.report($this, 'Application is installed')
+          - $.setAttr(deployed, True)
           - If: $.tomcat.instance.assignFloatingIp
             Then:
               - $ep: $.tomcat.instance.floatingIpAddress + ':8080/' + $.dir
               - $this.find(std:Environment).reporter.report($this, 'Running at http://' + $ep)
-          - $.setAttr(deployed, True)
-          - $mistral_workflow: $resources.string('TestTomcat.yaml')
-          - $.mistralClient.upload(definition => $mistral_workflow)
-          - $.mistralClient.run(name => 'test_tomcat', inputs => dict(url => 'http://' + $ep))
+              - $mistral_workflow: $resources.string('TestTomcat.yaml')
+              - $.mistralClient.upload(definition => $mistral_workflow)
+              - $.mistralClient.run(name => 'test_tomcat', inputs => dict(url => 'http://' + $ep))
