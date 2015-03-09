@@ -1,0 +1,42 @@
+version: '2.0'
+
+test_tomcat:
+  type: direct
+  input:
+    - url
+    
+  tasks:
+    check_tomcat_task:
+      action: std.http
+      input:
+        url: <% $.url %>
+        method: GET
+      policies:
+        retry:
+          count: 3
+          delay: 5
+      on-success:
+        - send_mail_task_success
+      on-error:
+        - send_mail_task_error
+
+    send_mail_task_success:
+      action: std.email
+      input: 
+        from_addr: policyguideddemo@gmail.com
+        to_addrs: [policyguideddemo@gmail.com]
+        subject: Tomcat Status
+        body: Tomcat is running
+        smtp_server: smtp3.hp.com
+        smtp_password:
+        
+    send_mail_task_error:
+      action: std.email
+      input: 
+        from_addr: policyguideddemo@gmail.com
+        to_addrs: [policyguideddemo@gmail.com]
+        subject: Tomcat Status
+        body: Error! Tomcat is not running!
+        smtp_server: smtp3.hp.com
+        smtp_password:
+      

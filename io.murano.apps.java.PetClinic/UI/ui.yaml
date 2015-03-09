@@ -1,0 +1,70 @@
+Version: 2
+
+Application:
+  ?:
+    type: io.murano.apps.java.PetClinic
+  name: $.appConfiguration.name
+  warLocation: $.appConfiguration.warLocation
+  dir: $.appConfiguration.dir
+  database: $.appConfiguration.database
+  tomcat: $.appConfiguration.tomcat
+  dbName: $.dbConfiguration.database
+  dbUser: $.dbConfiguration.username
+  dbPassword: $.dbConfiguration.password
+
+Forms:
+  - appConfiguration:
+      fields:
+        - name: name
+          type: string
+          label: Application Name
+          initial: 'PetClinic'
+          description: >-
+            Enter a desired name for the application. Just A-Z, a-z, 0-9, dash and
+            underline are allowed
+        - name: dir
+          type: string
+          label: Directory Name
+          description: >-
+            A directory at the web server to which the application will be installed
+          initial: petclinic
+        - name: database
+          type: [ io.murano.databases.PostgreSql, io.murano.databases.MySql ]
+          label: Database Server
+          description: >-
+            Select a database server to host the application's database
+        - name: tomcat
+          type: io.murano.apps.apache.Tomcat
+          label: Servlet Container
+          description: >-
+            Select an instance of Java servlet contaniner to run the app
+        - name: warLocation
+          type: string
+          initial: https://dl.dropboxusercontent.com/u/1684617/petclinic.war
+          hidden: true
+  - dbConfiguration:
+      fields:
+        - name: title
+          type: string
+          required: false
+          hidden: true
+          descriptionTitle: Database Configuration
+          description: Specify the properties of the database which will be created at the selected DB Server
+        - name: database
+          type: string
+          label: Database name
+          initial: pet_db
+          description: >-
+            Please, provide database name that is going to be created
+        - name: username
+          type: string
+          initial: pet_user
+          label: Username
+          description: >-
+            Please, provide username that is going to be used to connect to the database
+        - name: password
+          type: password
+          label: Password
+          descriptionTitle: Password
+          description: >-
+            Please, provide password that is going to be used to connect to the database
