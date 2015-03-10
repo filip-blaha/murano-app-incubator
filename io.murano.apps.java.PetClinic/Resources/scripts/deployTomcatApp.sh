@@ -47,7 +47,7 @@ export JAVA_OPTS="$JAVA_OPTS -Djdbc.username=$2"
 export JAVA_OPTS="$JAVA_OPTS -Djdbc.password=$3"
 
 
-if [[ $string == *"mysql"* ]]
+if [[ $5 == *"mysql"* ]]
 then
   export JAVA_OPTS="$JAVA_OPTS -Djdbc.initLocation=classpath:db/mysql/initDB.sql"
   export JAVA_OPTS="$JAVA_OPTS -Djdbc.dataLocation=classpath:db/mysql/populateDB.sql"
