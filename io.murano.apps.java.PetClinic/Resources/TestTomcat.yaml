@@ -29,6 +29,8 @@ test_tomcat:
         body: Tomcat is running
         smtp_server: smtp3.hp.com
         smtp_password:
+      on-success:
+        - add_owner_1
         
     send_mail_task_error:
       action: std.email
@@ -36,7 +38,44 @@ test_tomcat:
         from_addr: policyguideddemo@gmail.com
         to_addrs: [policyguideddemo@gmail.com]
         subject: Tomcat Status
-        body: Error! Tomcat is not running!
+        body: Error occured while cheking tomcat status!
         smtp_server: smtp3.hp.com
         smtp_password:
-      
+        
+    add_owner_1:
+      action: std.http
+      input:
+        url: <% $.url + '/owners' %>
+        method: POST
+        body: {"address":"Prague","city":"Prague","telephone":"123","firstName":"Filip","lastName":"Blaha"}
+        headers: {'Content-Type': 'application/json'}
+      on-success:
+        - add_owner_2
+
+    add_owner_2:
+      action: std.http
+      input:
+        url: <% $.url + '/owners' %>
+        method: POST
+        body: {"address":"Modiin","city":"Modiin","telephone":"123","firstName":"Natasha","lastName":"Beck"}
+        headers: {'Content-Type': 'application/json'}
+      on-success:
+        - add_owner_3
+
+    add_owner_3:
+      action: std.http
+      input:
+        url: <% $.url + '/owners' %>
+        method: POST
+        body: {"address":"Prague","city":"Prague","telephone":"123","firstName":"Radek","lastName":"Pospisil"}
+        headers: {'Content-Type': 'application/json'}
+      on-success:
+        - add_owner_4
+
+    add_owner_4:
+      action: std.http
+      input:
+        url: <% $.url + '/owners' %>
+        method: POST
+        body: {"address":"PetahTikva","city":"PetahTikva","telephone":"123","firstName":"Avigail","lastName":"Oron"}
+        headers: {'Content-Type': 'application/json'}
