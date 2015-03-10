@@ -5,7 +5,6 @@ Application:
     type: io.murano.apps.java.PetClinic
   name: $.appConfiguration.name
   warLocation: $.appConfiguration.warLocation
-  dir: $.appConfiguration.dir
   database: $.appConfiguration.database
   tomcat: $.appConfiguration.tomcat
   dbName: $.dbConfiguration.database
@@ -22,12 +21,6 @@ Forms:
           description: >-
             Enter a desired name for the application. Just A-Z, a-z, 0-9, dash and
             underline are allowed
-        - name: dir
-          type: string
-          label: Directory Name
-          description: >-
-            A directory at the web server to which the application will be installed
-          initial: petclinic
         - name: database
           type: [ io.murano.databases.PostgreSql, io.murano.databases.MySql ]
           label: Database Server

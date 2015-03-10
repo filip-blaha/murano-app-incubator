@@ -17,8 +17,6 @@ Properties:
     Contract: $.class(tc:Tomcat).notNull()
   warLocation:
     Contract: $.string().notNull()
-  dir:
-    Contract: $.string().notNull()
   database:
     Contract: $.class(db:SqlDatabase).notNull()
   dbName:
