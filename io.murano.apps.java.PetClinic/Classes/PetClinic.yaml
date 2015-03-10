@@ -43,23 +43,20 @@ Workflow:
           - $.tomcat.deploy()
           - $resources: new(sys:Resources)
           # Deploy app over Tomcat
-          - $template: $resources.yaml('DeployTomcatApp.template').bind(dict(
-                warLocation => $.warLocation
-              ))
-          - $this.find(std:Environment).reporter.report($this, 'Setting up the application on Tomcat.')
-          - $.tomcat.instance.agent.call($template, $resources)
           # Configure access to DB
           - $this.find(std:Environment).reporter.report($this, 'Ensuring Database is deployed.')
           - $.database.createDatabase($.dbName)
           - $.database.createUser($.dbUser, $.dbPassword)
           - $.database.assignUser($.dbUser, $.dbName)
           - $this.find(std:Environment).reporter.report($this, 'Configure access to DB.')
-          - $template: $resources.yaml('ConfigureAccessToSql.template').bind(dict(
+          - $template: $resources.yaml('DeployTomcatApp.template').bind(dict(
+                warLocation => $.warLocation,
                 username => $.dbUser,
                 password => $.dbPassword,
                 driverName => $.database.getJDBCDriverName(),
                 connectionStr => $.database.getJDBCConnectionString( $.dbName )
               ))
+          - $this.find(std:Environment).reporter.report($this, 'Setting up the application on Tomcat.')
           - $.tomcat.instance.agent.call($template, $resources)
           - $this.find(std:Environment).reporter.report($this, 'Application is installed')
           - $.setAttr(deployed, True)
