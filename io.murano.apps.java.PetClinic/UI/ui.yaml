@@ -40,7 +40,7 @@ Forms:
             Select an instance of Java servlet contaniner to run the app
         - name: warLocation
           type: string
-          initial: https://dl.dropboxusercontent.com/u/1684617/petclinic.war
+          initial: https://www.dropbox.com/s/ohewnljgjzndt1r/petclinic.war?dl=0
           hidden: true
   - dbConfiguration:
       fields:

@@ -23,9 +23,5 @@ fi
 bash installer.sh -p sys -i "java-devel"
 
 cd /usr/share/tomcat/webapps
-log "DEBUG: git-cloning $1 to $2"
-git clone $1 $2
-cd $2/WEB-INF/classes
-for f in $(find . -name "*.java"); do
-    javac -cp /usr/share/tomcat/lib/servlet-api.jar "$f"
-done
+log "DEBUG: downloading war"
+wget $1

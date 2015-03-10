@@ -46,8 +46,7 @@ Workflow:
           - $resources: new(sys:Resources)
           # Deploy app over Tomcat
           - $template: $resources.yaml('DeployTomcatApp.template').bind(dict(
-                warLocation => $.warLocation,
-                dir => $.dir
+                warLocation => $.warLocation
               ))
           - $this.find(std:Environment).reporter.report($this, 'Setting up the application on Tomcat.')
           - $.tomcat.instance.agent.call($template, $resources)
@@ -60,7 +59,6 @@ Workflow:
           - $template: $resources.yaml('ConfigureAccessToSql.template').bind(dict(
                 username => $.dbUser,
                 password => $.dbPassword,
-                dir => $.dir,
                 driverName => $.database.getJDBCDriverName(),
                 connectionStr => $.database.getJDBCConnectionString( $.dbName )
               ))
@@ -69,7 +67,7 @@ Workflow:
           - $.setAttr(deployed, True)
           - If: $.tomcat.instance.assignFloatingIp
             Then:
-              - $ep: $.tomcat.instance.floatingIpAddress + ':8080/' + $.dir
+              - $ep: $.tomcat.instance.floatingIpAddress + ':8080/petclinic'
               - $this.find(std:Environment).reporter.report($this, 'Running at http://' + $ep)
               - $mistral_workflow: $resources.string('TestTomcat.yaml')
               - $.mistralClient.upload(definition => $mistral_workflow)

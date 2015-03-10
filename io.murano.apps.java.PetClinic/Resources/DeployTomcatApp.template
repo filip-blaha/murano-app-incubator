@@ -3,8 +3,7 @@ Version: 1.0.0
 Name: Deploy App over Tomcat
 
 Parameters:
-  warLocation: warLocation
-  dir: $dir
+  warLocation: $warLocation
 
 Body: |
   return installApp('{0} {1}'.format(args.warLocation, args.dir)).stdout
