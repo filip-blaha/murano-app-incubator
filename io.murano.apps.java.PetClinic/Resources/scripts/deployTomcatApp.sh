@@ -22,6 +22,40 @@ fi
 
 bash installer.sh -p sys -i "java-devel"
 
+/usr/share/tomcat/bin/shutdown.sh
 cd /usr/share/tomcat/webapps
-log "DEBUG: downloading war"
+
+rm -rf petclinic*
+
 wget $1
+
+mkdir petclinic
+cd petclinic
+
+jar -xvf ../petclinic.war
+cd ..
+rm petclinic.war
+
+sed -e "s/PET_DB/pet_db/" -i /usr/share/tomcat/webapps/petclinic/WEB-INF/classes/db/mysql/initDB.sql
+
+
+#  return installApp('{0} {1} {2} {3} {4}'.format(args.warLocation, args.username, args.password, args.driverName, args.connectionStr)).stdout
+
+export JAVA_OPTS="$JAVA_OPTS -Djdbc.driverClassName=$4"
+export JAVA_OPTS="$JAVA_OPTS -Djdbc.url=$5"
+export JAVA_OPTS="$JAVA_OPTS -Djdbc.username=$2"
+export JAVA_OPTS="$JAVA_OPTS -Djdbc.password=$3"
+
+
+if [[ $string == *"mysql"* ]]
+then
+  export JAVA_OPTS="$JAVA_OPTS -Djdbc.initLocation=classpath:db/mysql/initDB.sql"
+  export JAVA_OPTS="$JAVA_OPTS -Djdbc.dataLocation=classpath:db/mysql/populateDB.sql"
+
+  export JAVA_OPTS="$JAVA_OPTS -Dhibernate.dialect=org.hibernate.dialect.MySQLDialect"
+  export JAVA_OPTS="$JAVA_OPTS -Djpa.database=MYSQL"
+
+fi
+
+/usr/share/tomcat/bin/startup.sh
+

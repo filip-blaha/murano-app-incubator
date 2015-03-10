@@ -4,9 +4,13 @@ Name: Deploy App over Tomcat
 
 Parameters:
   warLocation: $warLocation
+  username: $username
+  password: $password
+  driverName: $driverName
+  connectionStr: $connectionStr
 
 Body: |
-  return installApp('{0}'.format(args.warLocation)).stdout
+  return installApp('{0} {1} {2} {3} {4}'.format(args.warLocation, args.username, args.password, args.driverName, args.connectionStr)).stdout
 
 Scripts:
   installApp:
