@@ -36,9 +36,6 @@ jar -xvf ../petclinic.war
 cd ..
 rm petclinic.war
 
-sed -e "s/PET_DB/pet_db/" -i /usr/share/tomcat/webapps/petclinic/WEB-INF/classes/db/mysql/initDB.sql
-
-
 #  return installApp('{0} {1} {2} {3} {4}'.format(args.warLocation, args.username, args.password, args.driverName, args.connectionStr)).stdout
 
 export JAVA_OPTS="$JAVA_OPTS -Djdbc.driverClassName=$4"
