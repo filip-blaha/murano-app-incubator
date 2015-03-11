@@ -8,9 +8,10 @@ Parameters:
   password: $password
   driverName: $driverName
   connectionStr: $connectionStr
+  dbName: $dbName
 
 Body: |
-  return installApp('{0} {1} {2} {3} {4}'.format(args.warLocation, args.username, args.password, args.driverName, args.connectionStr)).stdout
+  return installApp('{0} {1} {2} {3} {4} {5}'.format(args.warLocation, args.username, args.password, args.driverName, args.connectionStr, args.dbName)).stdout
 
 Scripts:
   installApp:
@@ -18,7 +19,6 @@ Scripts:
     Version: 1.0.0
     EntryPoint: deployTomcatApp.sh
     Files:
-      - <installer.sh>
       - <common.sh>
     Options:
       captureStdout: true

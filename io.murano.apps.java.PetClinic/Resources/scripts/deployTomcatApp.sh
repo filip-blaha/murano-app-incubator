@@ -20,8 +20,6 @@ if [[ "$DistroBasedOn" != "redhat" ]]; then
     exit 1
 fi
 
-bash installer.sh -p sys -i "java-devel"
-
 /usr/share/tomcat/bin/shutdown.sh
 cd /usr/share/tomcat/webapps
 
@@ -36,10 +34,7 @@ jar -xvf ../petclinic.war
 cd ..
 rm petclinic.war
 
-sed -e "s/PET_DB/pet_db/" -i /usr/share/tomcat/webapps/petclinic/WEB-INF/classes/db/mysql/initDB.sql
-
-
-#  return installApp('{0} {1} {2} {3} {4}'.format(args.warLocation, args.username, args.password, args.driverName, args.connectionStr)).stdout
+sed -e "s/PET_DB/$5/" -i /usr/share/tomcat/webapps/petclinic/WEB-INF/classes/db/mysql/initDB.sql
 
 export JAVA_OPTS="$JAVA_OPTS -Djdbc.driverClassName=$4"
 export JAVA_OPTS="$JAVA_OPTS -Djdbc.url=$5"
