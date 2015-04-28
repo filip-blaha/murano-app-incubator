@@ -11,10 +11,9 @@ test_tomcat:
       input:
         url: <% $.url %>
         method: GET
-      policies:
-        retry:
-          count: 3
-          delay: 5
+      retry:
+        count: 3
+        delay: 5
       on-success:
         - send_mail_task_success
       on-error:
