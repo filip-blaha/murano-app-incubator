@@ -1,0 +1,25 @@
+---
+version: '2.0'
+
+reboot:
+  description: Simple workflow example
+  type: direct
+  input:
+    - vm_ip
+  output:
+    vm_id: <% $.vm_id %>
+
+  tasks:
+    find_instance:
+      action: nova.servers_list
+      input:
+        search_opts:
+          ip: <% $.vm_ip %>
+      publish:
+        vm_id: <% $.find_instance[0].id %>
+      on-success:
+        - reboot_instance
+
+    reboot_instance:
+      action: nova.servers_reboot server=<% $.vm_id %> reboot_type='SOFT'
+

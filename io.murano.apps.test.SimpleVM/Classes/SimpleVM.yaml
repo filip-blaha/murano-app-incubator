@@ -1,0 +1,68 @@
+Namespaces:
+  =: io.murano.apps.test
+  std: io.murano
+  res: io.murano.resources
+  sys: io.murano.system
+  apps: io.murano.apps
+
+
+Name: SimpleVM
+
+Extends: std:Application
+
+Properties:
+  name:
+    Contract: $.string().notNull()
+
+  instance:
+    Contract: $.class(res:Instance).notNull()
+
+  host:
+    Contract: $.string()
+    Usage: Out
+
+  user:
+    Contract: $.string()
+    Usage: Out
+
+  mistralClient:
+    Contract: $.class(sys:MistralClient)
+    Usage: Runtime
+
+Workflow:
+  initialize:
+    Body:
+      - $.environment: $.find(std:Environment).require()
+      - $this.mistralClient: new(sys:MistralClient)
+
+  deploy:
+    Body:
+      - If: !yaql "not bool($.getAttr(deployed))"
+        Then:
+          - $this.find(std:Environment).reporter.report($this, 'Creating VM ')
+          - $securityGroupIngress:
+              - ToPort: 22
+                FromPort: 22
+                IpProtocol: tcp
+                External: True
+          - $.environment.securityGroupManager.addGroupIngress($securityGroupIngress)
+          - $.instance.deploy()
+          - $resources: new(sys:Resources)
+          # Deploy Apache Tomcat
+          #- $template: $resources.yaml('DeployTomcat.template')
+          #- $this.find(std:Environment).reporter.report($this, 'Instance is created. Deploying Tomcat')
+          #- $.instance.agent.call($template, $resources)
+          - $this.find(std:Environment).reporter.report($this, 'Test VM is installed')
+          - $.host: $.instance.ipAddresses[0]
+          - $.user: 'root'
+          - $.setAttr(deployed, True)
+
+  restartVM:
+    Usage: Action
+    Description: 'Restart VM with a service'
+    Body:
+      - $resources: new(sys:Resources) 
+      - $this.find(std:Environment).reporter.report($this, 'Test VM is being rebooted')
+      - $mistral_workflow: $resources.string('RebootServer.yaml')
+      - $.mistralClient.upload(definition => $mistral_workflow)
+      - $.mistralClient.run(name => 'reboot', inputs => dict(vm_ip => $.instance.ipAddresses[0]))
