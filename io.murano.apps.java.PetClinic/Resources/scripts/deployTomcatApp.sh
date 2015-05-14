@@ -27,7 +27,7 @@ cd /usr/share/tomcat/webapps
 
 rm -rf petclinic*
 
-wget $1
+wget -q $1
 
 mkdir petclinic
 cd petclinic
